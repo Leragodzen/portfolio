@@ -1,5 +1,5 @@
 // Липкая кнопка внизу экрана.
-// Показывается, когда первый экран уехал вверх, и прячется у блока контактов —
+// Появляется, когда первый экран уехал вверх, и прячется у блока контактов —
 // там кнопки и так на виду.
 
 (function () {
@@ -9,24 +9,27 @@
   var hero = document.querySelector('.hero');
   var contact = document.getElementById('contact');
 
-  if (!bar || !hero || !('IntersectionObserver' in window)) return;
+  if (!bar || !hero) return;
 
-  var pastHero = false;
-  var atContact = false;
+  var waiting = false;
 
   function update() {
+    var pastHero = window.scrollY > hero.offsetTop + hero.offsetHeight - 120;
+    var atContact = contact
+      ? contact.getBoundingClientRect().top < window.innerHeight - 80
+      : false;
+
     bar.classList.toggle('is-on', pastHero && !atContact);
+    waiting = false;
   }
 
-  new IntersectionObserver(function (entries) {
-    pastHero = !entries[0].isIntersecting;
-    update();
-  }, { rootMargin: '-120px 0px 0px 0px' }).observe(hero);
-
-  if (contact) {
-    new IntersectionObserver(function (entries) {
-      atContact = entries[0].isIntersecting;
-      update();
-    }).observe(contact);
+  function onScroll() {
+    if (waiting) return;
+    waiting = true;
+    window.requestAnimationFrame(update);
   }
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', onScroll, { passive: true });
+  update();
 })();
