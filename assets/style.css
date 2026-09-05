@@ -249,15 +249,24 @@ a.phone:hover{transform:translateY(-4px)}
 .dark{background:var(--ink); color:var(--paper)}
 .dark .section__lead{color:rgba(244,242,237,.66)}
 
-.gantt{display:grid; gap:22px; margin-bottom:44px}
+.gantt{display:grid; gap:18px; margin-bottom:44px}
 .gantt__label{margin:0 0 9px; font-size:.9rem; color:rgba(244,242,237,.66)}
 .gantt__label b{color:var(--paper); font-weight:700}
 
-.gantt__bar{display:grid; grid-template-columns:repeat(12,1fr); gap:5px}
+.gantt__bar{display:grid; grid-template-columns:repeat(9,1fr); gap:5px}
 .gantt__bar i{height:38px; border-radius:5px}
 .gantt__bar--yours i{border:1.5px solid var(--flame)}
 .gantt__bar--mine i{background:var(--paper)}
-.gantt__bar--mine i:first-child{grid-column-start:6}
+/* лесенка: сначала мои два дня, потом ваши пять, потом мои два */
+.gantt__bar--yours i:first-child{grid-column-start:3}
+.gantt__bar--last i:first-child{grid-column-start:8}
+
+.gantt__note{
+  margin:4px 0 0;
+  font-size:.9rem;
+  color:rgba(244,242,237,.66);
+  max-width:46ch;
+}
 
 .terms{margin:0; display:grid; gap:2px}
 .terms dt{
