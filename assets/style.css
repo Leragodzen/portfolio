@@ -439,45 +439,79 @@ a.phone:hover{transform:translateY(-4px)}
   *,*::before,*::after{animation-duration:.01ms !important; transition-duration:.01ms !important}
 }
 
-/* ---------- фирменный индикатор прокрутки (вместо системного скроллбара) ---------- */
+/* ---------- рельс-оглавление справа (вместо системного скроллбара) ----------
+   Сегмент на каждый раздел. Заливается по мере чтения раздела:
+   сразу видно и сколько прошёл, и где находишься. */
 
 html{scrollbar-width:none}
 html::-webkit-scrollbar{display:none}
 
-.railtrack{
+.rail{
   position:fixed;
-  right:12px;
+  right:11px;
   top:50%;
   transform:translateY(-50%);
-  height:min(50vh,380px);
-  width:22px;
   z-index:25;
-  pointer-events:none;
-}
-.rail{
-  position:absolute;
-  left:50%; top:0; bottom:0;
-  width:2px; margin-left:-1px;
-  background:var(--line);
-  border-radius:2px;
-}
-.railmark{
-  position:absolute;
-  left:50%; top:0;
-  width:24px; height:24px;
-  margin-left:-12px; margin-top:-12px;
-  border-radius:50%;
-  background:var(--flame);
-  display:grid; place-items:center;
-  box-shadow:0 4px 10px -4px rgba(20,17,15,.5);
+  display:grid;
+  gap:6px;
 }
 
-@media (max-width:759px){
-  .railtrack{right:6px; height:38vh}
-  .railmark{width:19px; height:19px; margin-left:-9.5px; margin-top:-9.5px}
-  .railmark svg{width:10px; height:10px}
+.rail__seg{
+  display:block;
+  position:relative;
+  text-decoration:none;
+  pointer-events:none;   /* на телефоне — только индикатор */
+}
+
+.rail__seg span{
+  display:block;
+  width:3px;
+  height:26px;
+  border-radius:3px;
+  background:rgba(122,114,106,.4);   /* читается и на бумаге, и на чернилах */
+  overflow:hidden;
+  position:relative;
+}
+.rail__seg span::after{
+  content:"";
+  position:absolute; left:0; top:0;
+  width:100%;
+  height:var(--fill,0%);
+  background:var(--flame);
+  border-radius:3px;
+  transition:height .14s linear;
+}
+
+/* подпись раздела — только на компьютере, при наведении */
+.rail__seg b{
+  position:absolute;
+  right:16px;
+  top:50%;
+  transform:translateY(-50%) translateX(4px);
+  white-space:nowrap;
+  font-family:'Unbounded',system-ui,sans-serif;
+  font-weight:700;
+  font-size:.62rem;
+  letter-spacing:.06em;
+  text-transform:uppercase;
+  background:var(--flame);
+  color:var(--paper);
+  padding:5px 9px;
+  border-radius:99px;
+  opacity:0;
+  pointer-events:none;
+  transition:opacity .16s ease, transform .16s ease;
+}
+
+@media (min-width:760px){
+  .rail{right:16px; gap:7px}
+  .rail__seg{pointer-events:auto; cursor:pointer}
+  .rail__seg span{height:32px; width:3px}
+  .rail__seg:hover span{background:rgba(122,114,106,.7)}
+  .rail__seg:hover b,
+  .rail__seg:focus-visible b{opacity:1; transform:translateY(-50%) translateX(0)}
 }
 
 @media (prefers-reduced-motion:reduce){
-  .railmark{transition:none}
+  .rail__seg span::after{transition:none}
 }
