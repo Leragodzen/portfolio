@@ -296,6 +296,18 @@ a.phone:hover{transform:translateY(-4px)}
   width:11px; height:1.5px; background:var(--flame);
 }
 
+/* выделенная плашка под списком «что входит» */
+.pledge{
+  margin:30px 0 0;
+  padding:20px 22px;
+  border:1.5px solid var(--ink);
+  border-radius:18px;
+  font-size:.98rem;
+  line-height:1.5;
+  max-width:56ch;
+  background:var(--white);
+}
+
 /* ---------- цены ---------- */
 
 .prices{display:grid; gap:16px}
@@ -376,13 +388,13 @@ a.phone:hover{transform:translateY(-4px)}
 }
 .foot p{margin:0}
 
-/* ---------- липкая кнопка (только телефон) ---------- */
+/* ---------- липкая кнопка «Связаться» (только телефон) ---------- */
 
 .bar{
   position:fixed;
   left:0; right:0; bottom:0;
   padding:10px 14px calc(10px + env(safe-area-inset-bottom));
-  background:rgba(244,242,237,.92);
+  background:rgba(244,242,237,.94);
   backdrop-filter:blur(10px);
   border-top:1px solid var(--line);
   transform:translateY(105%);
@@ -390,16 +402,47 @@ a.phone:hover{transform:translateY(-4px)}
   z-index:30;
 }
 .bar.is-on{transform:none}
-.bar__btn{
+
+.bar__toggle{
   display:block;
-  text-align:center;
+  width:100%;
+  border:0;
+  cursor:pointer;
   background:var(--flame);
   color:var(--white);
-  text-decoration:none;
+  font-family:inherit;
+  font-size:1rem;
   font-weight:500;
   padding:15px;
   border-radius:999px;
 }
+
+.bar__links{
+  display:grid;
+  gap:8px;
+  overflow:hidden;
+  max-height:0;
+  opacity:0;
+  transition:max-height .26s ease, opacity .2s ease, margin-bottom .26s ease;
+}
+.bar.is-open .bar__links{
+  max-height:220px;
+  opacity:1;
+  margin-bottom:8px;
+}
+
+.bar__link{
+  display:block;
+  text-align:center;
+  text-decoration:none;
+  font-weight:500;
+  padding:14px;
+  border-radius:999px;
+  border:1.5px solid var(--ink);
+  color:var(--ink);
+  background:var(--paper);
+}
+.bar__link--tg{background:var(--ink); color:var(--paper)}
 
 /* ---------- планшет ---------- */
 

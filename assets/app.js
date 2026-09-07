@@ -1,12 +1,13 @@
-// Липкая кнопка внизу экрана и рельс-оглавление справа.
+// Липкая кнопка «Связаться» и рельс-оглавление справа.
 // Кнопка появляется, когда первый экран уехал вверх, и прячется у блока
-// контактов — там кнопки и так на виду. Рельс: по сегменту на раздел,
-// каждый заливается по мере того, как читатель проходит этот раздел.
+// контактов, где ссылки и так на виду. По нажатию раскрывает три способа
+// связи. Рельс: по сегменту на раздел, каждый заливается по мере чтения.
 
 (function () {
   'use strict';
 
   var bar = document.getElementById('bar');
+  var toggle = document.getElementById('barToggle');
   var hero = document.querySelector('.hero');
   var contact = document.getElementById('contact');
 
@@ -14,6 +15,15 @@
   var parts = segs.map(function (a) {
     return document.querySelector(a.getAttribute('href'));
   });
+
+  // ── раскрытие способов связи ──────────────────────────────────────
+  if (toggle && bar) {
+    toggle.addEventListener('click', function () {
+      var open = bar.classList.toggle('is-open');
+      toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+      toggle.querySelector('.bar__word').textContent = open ? 'Свернуть' : 'Связаться';
+    });
+  }
 
   if (!hero && !segs.length) return;
 
@@ -25,10 +35,20 @@
       var atContact = contact
         ? contact.getBoundingClientRect().top < window.innerHeight - 80
         : false;
-      bar.classList.toggle('is-on', pastHero && !atContact);
+      var show = pastHero && !atContact;
+      bar.classList.toggle('is-on', show);
+
+      // уехали от кнопки — сворачиваем список
+      if (!show && bar.classList.contains('is-open')) {
+        bar.classList.remove('is-open');
+        if (toggle) {
+          toggle.setAttribute('aria-expanded', 'false');
+          toggle.querySelector('.bar__word').textContent = 'Связаться';
+        }
+      }
     }
 
-    // середина экрана — точка, по которой считаем «где мы сейчас»
+    // середина экрана — точка, по которой считаем, где мы сейчас
     var anchor = window.scrollY + window.innerHeight * 0.5;
     var atBottom =
       window.scrollY + window.innerHeight >=
