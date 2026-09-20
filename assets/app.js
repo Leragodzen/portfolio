@@ -82,12 +82,8 @@
       window.scrollY + window.innerHeight >=
       document.documentElement.scrollHeight - 4;
 
-    // кружок с курсором едет по рельсу вместе с прокруткой страницы
-    if (rail && railMark) {
-      var max = document.documentElement.scrollHeight - window.innerHeight;
-      var done = max > 0 ? Math.min(1, Math.max(0, window.scrollY / max)) : 0;
-      rail.style.setProperty('--go', (done * 100) + '%');
-    }
+    // кружок стоит ровно на конце оранжевой заливки, считаем их вместе
+    var markPos = 0;
 
     for (var i = 0; i < segs.length; i++) {
       var part = parts[i];
@@ -96,7 +92,13 @@
       if (atBottom && i === segs.length - 1) fill = 1;
       fill = Math.max(0, Math.min(1, fill));
       segs[i].style.setProperty('--fill', (fill * 100) + '%');
+
+      if (fill > 0) {
+        markPos = segs[i].offsetTop + fill * segs[i].offsetHeight;
+      }
     }
+
+    if (railMark) railMark.style.top = markPos + 'px';
 
     waiting = false;
   }
