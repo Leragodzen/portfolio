@@ -25,6 +25,32 @@
     });
   }
 
+
+  // ── просмотр переписки с отзывом ──────────────────────────────────
+  var shot = document.getElementById('shot');
+  var shotImg = document.getElementById('shotImg');
+  var shotClose = document.getElementById('shotClose');
+
+  if (shot && shotImg) {
+    function closeShot() {
+      shot.hidden = true;
+      document.body.style.overflow = '';
+    }
+    document.addEventListener('click', function (e) {
+      var btn = e.target.closest ? e.target.closest('.review__show') : null;
+      if (btn) {
+        shotImg.src = btn.getAttribute('data-shot');
+        shot.hidden = false;
+        document.body.style.overflow = 'hidden';
+        return;
+      }
+      if (e.target === shot || e.target === shotClose) closeShot();
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && !shot.hidden) closeShot();
+    });
+  }
+
   if (!hero && !segs.length) return;
 
   var waiting = false;
