@@ -11,6 +11,8 @@
   var hero = document.querySelector('.hero');
   var contact = document.getElementById('contact');
 
+  var rail = document.querySelector('.rail');
+  var railMark = document.getElementById('railMark');
   var segs = [].slice.call(document.querySelectorAll('.rail__seg'));
   var parts = segs.map(function (a) {
     return document.querySelector(a.getAttribute('href'));
@@ -79,6 +81,13 @@
     var atBottom =
       window.scrollY + window.innerHeight >=
       document.documentElement.scrollHeight - 4;
+
+    // кружок с курсором едет по рельсу вместе с прокруткой страницы
+    if (rail && railMark) {
+      var max = document.documentElement.scrollHeight - window.innerHeight;
+      var done = max > 0 ? Math.min(1, Math.max(0, window.scrollY / max)) : 0;
+      rail.style.setProperty('--go', (done * 100) + '%');
+    }
 
     for (var i = 0; i < segs.length; i++) {
       var part = parts[i];

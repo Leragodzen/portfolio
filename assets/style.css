@@ -603,13 +603,20 @@ html::-webkit-scrollbar{display:none}
   gap:6px;
 }
 
+/* кружок с курсором едет по рельсу вместе с прокруткой */
 .rail__mark{
-  width:20px; height:20px;
-  margin:0 auto 4px;
+  position:absolute;
+  left:50%;
+  top:var(--go,0%);
+  transform:translate(-50%,-50%);
+  width:26px; height:26px;
   border-radius:50%;
   background:var(--flame);
   display:grid; place-items:center;
-  box-shadow:0 3px 8px -3px rgba(20,17,15,.5);
+  box-shadow:0 4px 10px -3px rgba(20,17,15,.55);
+  z-index:2;
+  transition:top .12s linear;
+  pointer-events:none;
 }
 
 .rail__seg{
