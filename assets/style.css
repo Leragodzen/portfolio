@@ -603,21 +603,6 @@ html::-webkit-scrollbar{display:none}
   gap:6px;
 }
 
-/* кружок с курсором стоит на конце заливки и едет вместе с ней.
-   Позицию ставит скрипт в пикселях, анимации нет: иначе он дёргается. */
-.rail__mark{
-  position:absolute;
-  left:50%;
-  top:0;
-  transform:translate(-50%,-50%);
-  width:19px; height:19px;
-  border-radius:50%;
-  background:var(--flame);
-  display:grid; place-items:center;
-  z-index:2;
-  pointer-events:none;
-}
-
 .rail__seg{
   display:block;
   position:relative;

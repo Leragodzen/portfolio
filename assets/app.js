@@ -11,8 +11,6 @@
   var hero = document.querySelector('.hero');
   var contact = document.getElementById('contact');
 
-  var rail = document.querySelector('.rail');
-  var railMark = document.getElementById('railMark');
   var segs = [].slice.call(document.querySelectorAll('.rail__seg'));
   var parts = segs.map(function (a) {
     return document.querySelector(a.getAttribute('href'));
@@ -82,9 +80,6 @@
       window.scrollY + window.innerHeight >=
       document.documentElement.scrollHeight - 4;
 
-    // кружок стоит ровно на конце оранжевой заливки, считаем их вместе
-    var markPos = 0;
-
     for (var i = 0; i < segs.length; i++) {
       var part = parts[i];
       if (!part) continue;
@@ -92,13 +87,7 @@
       if (atBottom && i === segs.length - 1) fill = 1;
       fill = Math.max(0, Math.min(1, fill));
       segs[i].style.setProperty('--fill', (fill * 100) + '%');
-
-      if (fill > 0) {
-        markPos = segs[i].offsetTop + fill * segs[i].offsetHeight;
-      }
     }
-
-    if (railMark) railMark.style.top = markPos + 'px';
 
     waiting = false;
   }
