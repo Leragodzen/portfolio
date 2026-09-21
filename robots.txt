@@ -1,5 +1,7 @@
 User-agent: *
 Allow: /
 Disallow: /privacy.html
+Disallow: /oferta.html
+Disallow: /demo/
 
 Sitemap: https://leragodzen.github.io/portfolio/sitemap.xml

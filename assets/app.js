@@ -51,6 +51,22 @@
     });
   }
 
+
+  // ── плашка про cookie ─────────────────────────────────────────────
+  var cookie = document.getElementById('cookie');
+  var cookieOk = document.getElementById('cookieOk');
+
+  if (cookie && cookieOk) {
+    var soglasie = null;
+    try { soglasie = localStorage.getItem('cookie-ok'); } catch (e) {}
+    if (!soglasie) cookie.hidden = false;
+
+    cookieOk.addEventListener('click', function () {
+      cookie.hidden = true;
+      try { localStorage.setItem('cookie-ok', '1'); } catch (e) {}
+    });
+  }
+
   if (!hero && !segs.length) return;
 
   var waiting = false;

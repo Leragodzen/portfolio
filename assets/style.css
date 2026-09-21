@@ -414,7 +414,7 @@ a.phone:hover{transform:translateY(-4px)}
 
 /* ---------- цены ---------- */
 
-.prices{display:grid; gap:16px}
+.prices{display:grid; gap:16px}   /* телефон: столбиком */
 .price{
   background:var(--white);
   border:1px solid var(--line);
@@ -435,6 +435,7 @@ a.phone:hover{transform:translateY(-4px)}
 .price--main .price__sum{color:var(--flame)}
 .price__time{margin:0 0 14px; font-size:.85rem; color:var(--ash)}
 .price__what{margin:0; font-size:.94rem; color:#2C2724}
+.price__what a{color:var(--flame); text-underline-offset:3px}
 
 /* ---------- обо мне ---------- */
 
@@ -563,7 +564,7 @@ a.phone:hover{transform:translateY(-4px)}
   .work:nth-child(even) .work__body{order:1}
   .work + .work{margin-top:64px; padding-top:64px}
 
-  .prices{grid-template-columns:repeat(3,1fr); gap:20px}
+  .prices{grid-template-columns:repeat(2,1fr); gap:20px}
 
   .included{grid-template-columns:1fr 1fr; column-gap:44px}
 
@@ -661,4 +662,43 @@ html::-webkit-scrollbar{display:none}
 
 @media (prefers-reduced-motion:reduce){
   .rail__seg span::after{transition:none}
+}
+
+/* ---------- плашка про cookie ---------- */
+
+.cookie[hidden]{display:none}
+.cookie{
+  position:fixed;
+  left:12px; right:12px;
+  bottom:calc(12px + env(safe-area-inset-bottom));
+  z-index:40;
+  display:flex;
+  flex-wrap:wrap;
+  align-items:center;
+  gap:12px;
+  padding:14px 16px;
+  border-radius:16px;
+  background:var(--ink);
+  color:rgba(244,242,237,.82);
+  font-size:.82rem;
+  line-height:1.45;
+  box-shadow:0 14px 34px -14px rgba(20,17,15,.55);
+}
+.cookie p{margin:0; flex:1 1 200px}
+.cookie a{color:var(--paper)}
+.cookie button{
+  flex:0 0 auto;
+  border:0;
+  border-radius:999px;
+  background:var(--flame);
+  color:var(--white);
+  font:inherit;
+  font-weight:500;
+  padding:10px 20px;
+  cursor:pointer;
+}
+
+/* на телефоне липкая кнопка «Связаться» стоит внизу — поднимаем плашку над ней */
+@media (max-width:759px){
+  .cookie{bottom:calc(84px + env(safe-area-inset-bottom))}
 }

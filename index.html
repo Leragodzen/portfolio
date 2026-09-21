@@ -4,12 +4,12 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Валерия Леванова · сайты для бизнеса за неделю</title>
-<meta name="description" content="Делаю сайты для бизнеса под ключ: сама собираю информацию, пишу тексты, готовлю фотографии. Одностраничник от 25 000 ₽, многостраничный сайт от 65 000 ₽.">
+<meta name="description" content="Делаю сайты для бизнеса под ключ: сама собираю информацию, пишу тексты, готовлю фотографии. Одностраничник от 25 000 ₽, многостраничный сайт от 65 000 ₽, интернет-магазин от 90 000 ₽.">
 <link rel="canonical" href="https://leragodzen.github.io/portfolio/">
 
 <meta property="og:type" content="website">
 <meta property="og:title" content="Сайт для вашего дела за неделю">
-<meta property="og:description" content="Сайт под ключ. Сама найду и подготовлю всё, что нужно: тексты, фотографии, оформление. От вас минимум участия.">
+<meta property="og:description" content="Сайт под ключ: тексты, фотографии, оформление. Одностраничник от 25 000 ₽, многостраничный от 65 000 ₽, интернет-магазин от 90 000 ₽.">
 <meta property="og:image" content="https://leragodzen.github.io/portfolio/assets/og.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -22,7 +22,7 @@
 <link rel="preload" href="assets/fonts/unbounded-800-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="assets/fonts/onest-400-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="assets/fonts/fonts.css">
-<link rel="stylesheet" href="assets/style.css?v=12">
+<link rel="stylesheet" href="assets/style.css?v=13">
 
 <script type="application/ld+json">
 {
@@ -34,6 +34,7 @@
   "priceRange": "от 15 000 ₽"
 }
 </script>
+<script src="assets/metrika.js?v=1" defer></script>
 </head>
 <body>
 
@@ -201,7 +202,7 @@
       </div>
     </article>
 
-    <article class="work">
+    <article class="work" id="case-foryou">
       <a class="phone" href="https://foryouflowers.ru" target="_blank" rel="noopener" aria-label="Открыть сайт бутика цветов For You">
         <img src="assets/works/foryou.jpg" width="416" height="900" alt="Главная страница сайта бутика цветов For You" loading="lazy" decoding="async">
       </a>
@@ -298,6 +299,7 @@
     <li>Домен, хостинг и публикация. Оформляю на вас, сайт остаётся вашим</li>
     <li>Политика конфиденциальности и согласие на обработку данных. Всё по закону</li>
     <li>Год гарантии на работу сайта. Если что-то сломается, чиню бесплатно</li>
+    <li>Сайт становится полностью вашим после оплаты. Внизу страницы остаётся небольшая подпись с моим именем, как подпись художника на картине</li>
   </ul>
 
   <p class="pledge">
@@ -322,7 +324,14 @@
       <h3 class="price__name">Сайт из нескольких страниц</h3>
       <p class="price__sum">от 65 000 ₽</p>
       <p class="price__time">7 рабочих дней</p>
-      <p class="price__what">Меню, каталог или услуги отдельными разделами. Так сделаны все работы выше.</p>
+      <p class="price__what">Меню, каталог или услуги отдельными разделами. Так сделаны Фёдор Никитич, Сладкая Молли, Квартал и Cuerpo.</p>
+    </article>
+
+    <article class="price">
+      <h3 class="price__name">Интернет-магазин</h3>
+      <p class="price__sum">от 90 000 ₽</p>
+      <p class="price__time">срок по объёму</p>
+      <p class="price__what">Каталог, корзина, доставка и онлайн-оплата. Заказ приходит готовым: с адресом, датой и суммой. Так сделан <a href="#case-foryou">For You</a> из работ выше.</p>
     </article>
 
     <article class="price">
@@ -419,6 +428,12 @@
   <img id="shotImg" src="" alt="Отзыв заказчика в переписке">
 </div>
 
-<script src="assets/app.js?v=12" defer></script>
+<script src="assets/app.js?v=13" defer></script>
+
+<div class="cookie" id="cookie" hidden>
+  <p>Сайт использует cookie и Яндекс.Метрику, чтобы понимать, какие разделы читают. Подробнее в <a href="privacy.html">политике конфиденциальности</a>.</p>
+  <button type="button" id="cookieOk">Понятно</button>
+</div>
+
 </body>
 </html>
