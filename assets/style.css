@@ -86,8 +86,13 @@ a{color:inherit}
   font-size:.78rem;
   letter-spacing:.06em;
 }
-.top__name{font-weight:700}
+.top__name{font-weight:700; white-space:nowrap}
 .top__role{color:var(--ash)}
+
+/* на узком экране имя и подпись не помещаются в строку одним размером */
+@media (max-width:460px){
+  .top{font-size:.7rem; gap:8px}
+}
 
 /* ---------- главный экран ---------- */
 
