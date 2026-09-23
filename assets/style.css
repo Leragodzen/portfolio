@@ -104,6 +104,17 @@ a{color:inherit}
 }
 .hero__h1 em{font-style:normal; color:var(--flame)}
 
+/* главный посыл: доход и клиенты. Стоит между заголовком и пояснением */
+.hero__claim{
+  margin:0 0 18px;
+  font-weight:700;
+  font-size:1.16rem;
+  line-height:1.4;
+  max-width:34ch;
+  letter-spacing:-.01em;
+}
+.hero__claim em{font-style:normal; color:var(--flame)}
+
 .hero__lead{
   margin:0 0 30px;
   font-size:1.06rem;
@@ -155,7 +166,7 @@ a{color:inherit}
 
 /* ---------- работы ---------- */
 
-.work{display:grid; gap:22px; justify-items:start}
+.work{display:grid; gap:22px; justify-items:start; scroll-margin-top:24px}
 .work + .work{margin-top:44px; padding-top:44px; border-top:1px solid var(--line)}
 
 .phone{
@@ -437,6 +448,16 @@ a.phone:hover{transform:translateY(-4px)}
 .price__what{margin:0; font-size:.94rem; color:#2C2724}
 .price__what a{color:var(--flame); text-underline-offset:3px}
 
+/* тариф не основной — плашка тише остальных */
+.price--quiet{
+  background:transparent;
+  border-color:rgba(20,17,15,.09);
+}
+.price--quiet .price__name,
+.price--quiet .price__sum{color:var(--ash)}
+.price--quiet .price__sum{font-size:1.3rem}
+.price--quiet .price__what{color:var(--ash)}
+
 /* ---------- обо мне ---------- */
 
 .about{display:grid; gap:26px}
@@ -493,60 +514,92 @@ a.phone:hover{transform:translateY(-4px)}
 }
 .foot p{margin:0}
 
-/* ---------- липкая кнопка «Связаться» (только телефон) ---------- */
+/* ---------- плавающая кнопка «Связаться» (всегда справа снизу) ----------
+   Контейнер не ловит касания: иначе прозрачная область вокруг кнопки
+   съедает нажатия по содержимому страницы в правом нижнем углу. */
 
 .bar{
   position:fixed;
-  left:0; right:0; bottom:0;
-  padding:10px 14px calc(10px + env(safe-area-inset-bottom));
-  background:rgba(244,242,237,.94);
-  backdrop-filter:blur(10px);
-  border-top:1px solid var(--line);
-  transform:translateY(105%);
-  transition:transform .28s ease;
-  z-index:30;
+  right:14px;
+  bottom:calc(16px + env(safe-area-inset-bottom));
+  z-index:45;
+  display:grid;
+  justify-items:end;
+  gap:8px;
+  pointer-events:none;
 }
-.bar.is-on{transform:none}
 
 .bar__toggle{
-  display:block;
-  width:100%;
+  --ring:rgba(232,65,15,.5);
+  pointer-events:auto;
+  display:inline-flex;
+  align-items:center;
   border:0;
   cursor:pointer;
   background:var(--flame);
   color:var(--white);
   font-family:inherit;
-  font-size:1rem;
+  font-size:.98rem;
   font-weight:500;
-  padding:15px;
+  padding:16px 24px;
   border-radius:999px;
+  -webkit-tap-highlight-color:transparent;
+  touch-action:manipulation;
+  transition:background .18s ease, transform .12s ease;
+  animation:barPulse 2.8s ease-out infinite;
+}
+.bar__toggle:active{transform:scale(.97)}
+.bar.is-open .bar__toggle{background:var(--ink); animation:none}
+
+/* над оранжевым блоком контактов оранжевая кнопка сливалась бы с фоном */
+.bar.is-dark .bar__toggle{background:var(--ink); --ring:rgba(20,17,15,.45)}
+
+@media (hover:hover){
+  .bar__toggle:hover{background:var(--ink); animation:none}
+}
+
+/* мягкая пульсация: кольцо расходится от кнопки и гаснет */
+@keyframes barPulse{
+  0%  {box-shadow:0 12px 26px -12px rgba(20,17,15,.5), 0 0 0 0 var(--ring)}
+  70% {box-shadow:0 12px 26px -12px rgba(20,17,15,.5), 0 0 0 16px rgba(0,0,0,0)}
+  100%{box-shadow:0 12px 26px -12px rgba(20,17,15,.5), 0 0 0 0 rgba(0,0,0,0)}
 }
 
 .bar__links{
   display:grid;
+  justify-items:end;
   gap:8px;
-  overflow:hidden;
-  max-height:0;
+  pointer-events:none;
+  visibility:hidden;
   opacity:0;
-  transition:max-height .26s ease, opacity .2s ease, margin-bottom .26s ease;
+  transform:translateY(10px) scale(.96);
+  transform-origin:100% 100%;
+  transition:opacity .2s ease, transform .2s ease, visibility .2s;
 }
 .bar.is-open .bar__links{
-  max-height:220px;
+  pointer-events:auto;
+  visibility:visible;
   opacity:1;
-  margin-bottom:8px;
+  transform:none;
 }
 
 .bar__link{
-  display:block;
-  text-align:center;
+  display:inline-flex;
+  align-items:center;
   text-decoration:none;
   font-weight:500;
-  padding:14px;
+  font-size:.92rem;
+  padding:12px 20px;
   border-radius:999px;
   border:1.5px solid var(--ink);
   color:var(--ink);
   background:var(--paper);
+  box-shadow:0 10px 22px -14px rgba(20,17,15,.6);
+  -webkit-tap-highlight-color:transparent;
+  touch-action:manipulation;
+  transition:transform .12s ease;
 }
+.bar__link:active{transform:scale(.97)}
 .bar__link--tg{background:var(--ink); color:var(--paper)}
 
 /* ---------- планшет ---------- */
@@ -572,11 +625,12 @@ a.phone:hover{transform:translateY(-4px)}
 
   .gantt__bar i{height:52px}
 
-  .bar{display:none}
-  .foot{padding-bottom:40px}
+  .bar{right:34px; bottom:26px}
+  .foot{padding-bottom:96px}
 }
 
 @media (min-width:1080px){
+  .hero__claim{font-size:1.42rem; max-width:30ch}
   .hero__lead{font-size:1.15rem}
   .work{grid-template-columns:260px 1fr; gap:64px}
   .phone{max-width:260px}
@@ -698,7 +752,12 @@ html::-webkit-scrollbar{display:none}
   cursor:pointer;
 }
 
-/* на телефоне липкая кнопка «Связаться» стоит внизу — поднимаем плашку над ней */
+/* на телефоне плашка и кнопка «Связаться» делят низ экрана: пока плашка
+   висит, кнопку не показываем, после «Понятно» она на месте */
 @media (max-width:759px){
-  .cookie{bottom:calc(84px + env(safe-area-inset-bottom))}
+  body.cookie-on .bar{display:none}
+}
+/* на компьютере плашка уходит влево и с кнопкой не пересекается */
+@media (min-width:760px){
+  .cookie{right:auto; max-width:540px; left:24px; bottom:24px}
 }

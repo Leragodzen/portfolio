@@ -4,4 +4,4 @@ Disallow: /privacy.html
 Disallow: /oferta.html
 Disallow: /demo/
 
-Sitemap: https://leragodzen.github.io/portfolio/sitemap.xml
+Sitemap: https://pixellord.ru/sitemap.xml

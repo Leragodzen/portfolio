@@ -1,14 +1,13 @@
-// Липкая кнопка «Связаться» и рельс-оглавление справа.
-// Кнопка появляется, когда первый экран уехал вверх, и прячется у блока
-// контактов, где ссылки и так на виду. По нажатию раскрывает три способа
-// связи. Рельс: по сегменту на раздел, каждый заливается по мере чтения.
+// Плавающая кнопка «Связаться» и рельс-оглавление справа.
+// Кнопка висит в правом нижнем углу всё время и по нажатию раскрывает
+// Telegram и ВКонтакте. Рельс: по сегменту на раздел, каждый заливается
+// по мере чтения.
 
 (function () {
   'use strict';
 
   var bar = document.getElementById('bar');
   var toggle = document.getElementById('barToggle');
-  var hero = document.querySelector('.hero');
   var contact = document.getElementById('contact');
 
   var segs = [].slice.call(document.querySelectorAll('.rail__seg'));
@@ -18,10 +17,23 @@
 
   // ── раскрытие способов связи ──────────────────────────────────────
   if (toggle && bar) {
-    toggle.addEventListener('click', function () {
-      var open = bar.classList.toggle('is-open');
+    function setBar(open) {
+      bar.classList.toggle('is-open', open);
       toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
       toggle.querySelector('.bar__word').textContent = open ? 'Свернуть' : 'Связаться';
+    }
+
+    toggle.addEventListener('click', function (e) {
+      e.stopPropagation();
+      setBar(!bar.classList.contains('is-open'));
+    });
+
+    document.addEventListener('click', function (e) {
+      if (bar.classList.contains('is-open') && !bar.contains(e.target)) setBar(false);
+    });
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && bar.classList.contains('is-open')) setBar(false);
     });
   }
 
@@ -59,35 +71,29 @@
   if (cookie && cookieOk) {
     var soglasie = null;
     try { soglasie = localStorage.getItem('cookie-ok'); } catch (e) {}
-    if (!soglasie) cookie.hidden = false;
+    // пока плашка внизу, кнопку «Связаться» прячем: иначе они налезают друг на друга
+    if (!soglasie) {
+      cookie.hidden = false;
+      document.body.classList.add('cookie-on');
+    }
 
     cookieOk.addEventListener('click', function () {
       cookie.hidden = true;
+      document.body.classList.remove('cookie-on');
       try { localStorage.setItem('cookie-ok', '1'); } catch (e) {}
     });
   }
 
-  if (!hero && !segs.length) return;
+  if (!segs.length) return;
 
   var waiting = false;
 
   function update() {
-    if (bar && hero) {
-      var pastHero = window.scrollY > hero.offsetTop + hero.offsetHeight - 120;
-      var atContact = contact
-        ? contact.getBoundingClientRect().top < window.innerHeight - 80
-        : false;
-      var show = pastHero && !atContact;
-      bar.classList.toggle('is-on', show);
-
-      // уехали от кнопки — сворачиваем список
-      if (!show && bar.classList.contains('is-open')) {
-        bar.classList.remove('is-open');
-        if (toggle) {
-          toggle.setAttribute('aria-expanded', 'false');
-          toggle.querySelector('.bar__word').textContent = 'Связаться';
-        }
-      }
+    // над оранжевым блоком контактов кнопка становится тёмной
+    if (bar && contact && toggle) {
+      var c = contact.getBoundingClientRect();
+      var b = toggle.getBoundingClientRect();
+      bar.classList.toggle('is-dark', c.top < b.bottom && c.bottom > b.top);
     }
 
     // середина экрана — точка, по которой считаем, где мы сейчас
