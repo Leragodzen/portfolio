@@ -44,6 +44,9 @@ a{color:inherit}
   line-height:1;
   letter-spacing:-.035em;
   margin:0 0 14px;
+  /* «конфиденциальности» в одно слово шире экрана телефона */
+  overflow-wrap:break-word;
+  hyphens:auto;
 }
 .h2--big{font-size:clamp(2rem,10vw,3.4rem)}
 .h2 em{font-style:normal;color:var(--flame)}
